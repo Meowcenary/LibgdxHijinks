@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.libgdxtest.screens.MainGameScreen;
+import com.libgdxtest.screens.MainMenuScreen;
 
 public class SpaceGame extends Game {
 
@@ -12,7 +13,7 @@ public class SpaceGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		this.setScreen(new MainGameScreen(this));
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
