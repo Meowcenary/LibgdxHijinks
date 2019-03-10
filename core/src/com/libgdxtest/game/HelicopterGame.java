@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.libgdxtest.screens.MainGameScreen;
 import com.libgdxtest.screens.MainMenuScreen;
 
-public class SpaceGame extends Game {
+public class HelicopterGame extends Game {
+
+	public static final int WIDTH = 480;
+	public static final int HEIGHT = 720;
 
 	public SpriteBatch batch;
 

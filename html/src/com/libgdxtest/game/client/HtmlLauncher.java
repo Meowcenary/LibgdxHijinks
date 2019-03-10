@@ -3,7 +3,7 @@ package com.libgdxtest.game.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.libgdxtest.game.SpaceGame;
+import com.libgdxtest.game.HelicopterGame;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +46,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new SpaceGame();
+                return new HelicopterGame();
         }
 }

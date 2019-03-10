@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
-import com.libgdxtest.game.SpaceGame;
+import com.libgdxtest.game.HelicopterGame;
 
 public class MainGameScreen implements Screen {
 
@@ -16,9 +16,9 @@ public class MainGameScreen implements Screen {
 	float x;
 	float y;
 
-	SpaceGame game;
+	HelicopterGame game;
 
-	public MainGameScreen (SpaceGame game) {
+	public MainGameScreen (HelicopterGame game) {
 	    this.game = game;
     }
 
