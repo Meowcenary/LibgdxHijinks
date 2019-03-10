@@ -3,35 +3,24 @@ package com.libgdxtest.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 
-import com.libgdxtest.game.SpaceGame;
+import com.libgdxtest.game.HelicopterGame;
 
 public class MainMenuScreen implements Screen {
 
-    SpaceGame game;
+    private static final float BASE_BUTTON_Y = 100;
+    private static final float BUTTON_SPACING_Y = 80;
 
-    Float baseButtonX, baseButtonY, buttonSpacing;
-    Texture[] buttons;
-    Texture playButtonActive;
-    Texture playButtonInactive;
-    Texture exitButtonActive;
-    Texture exitButtonInactive;
+    HelicopterGame game;
 
+    private Button[] buttons;
 
-    public MainMenuScreen (SpaceGame game) {
+    public MainMenuScreen (HelicopterGame game) {
         this.game = game;
+        Button playButton = new Button("play_button_active.png", "play_button_inactive.png", 70, 200);
+        Button exitButton = new Button("exit_button_active.png", "exit_button_inactive.png", 70,200);
 
-        playButtonActive = new Texture("play_button_active.png");
-        playButtonInactive = new Texture("play_button_inactive.png");
-        exitButtonActive = new Texture("exit_button_active.png");
-        exitButtonInactive = new Texture("exit_button_inactive.png");
-        this.buttons = new Texture[]{ exitButtonInactive, playButtonInactive };
-
-        // must explicitly cast to float, java views floating point literals (e.g 0.0) as doubles by default
-        baseButtonX = (float) 0;
-        baseButtonY = (float) 0;
-        buttonSpacing = (float) 80;
+        this.buttons = new Button[]{ exitButton, playButton };
     }
 
     @Override
@@ -41,16 +30,11 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render (float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.batch.begin();
-
-		float iterations = 1;
-        for (Texture button : buttons) {
-            game.batch.draw(button, baseButtonX, baseButtonY + iterations*buttonSpacing);
-            iterations += 1;
-        }
+        drawButtons();
 		game.batch.end();
     }
 
@@ -77,5 +61,44 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose () {
 
+    }
+
+    private void drawButtons() {
+		float iterations = 1;
+        for (Button button : buttons) {
+            float xDrawStart = xButtonSpacing(button);
+            float yDrawStart = BASE_BUTTON_Y + iterations* BUTTON_SPACING_Y;
+
+            if (betweenButtonWidth(button) && betweenButtonHeight(button, yDrawStart)) {
+                game.batch.draw(button.activeImage, xDrawStart, yDrawStart);
+            }
+            else {
+                game.batch.draw(button.inactiveImage, xDrawStart, yDrawStart);
+            }
+            iterations += 1;
+        }
+    }
+
+    // to draw in center: HelicopterGame.WIDTH / 2 - BUTTON_WIDTH / 2
+    private float xButtonSpacing(Button button) {
+        return HelicopterGame.WIDTH / 2 - button.width / 2;
+    }
+
+    private boolean betweenButtonWidth(Button button) {
+        if ((xButtonSpacing(button) < Gdx.input.getX()) && (Gdx.input.getX() < HelicopterGame.WIDTH - xButtonSpacing(button))) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean betweenButtonHeight(Button button, float yDrawStart) {
+        if ((HelicopterGame.HEIGHT - Gdx.input.getY() < yDrawStart + button.height) && (HelicopterGame.HEIGHT - Gdx.input.getY() > yDrawStart)) {
+            return true;
+        }
+        else {
+           return false;
+        }
     }
 }
