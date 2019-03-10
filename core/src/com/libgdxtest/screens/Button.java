@@ -8,7 +8,7 @@ public class Button {
     public int height;
     public int width;
 
-    public Button(String activeImage, String inactiveImage, int height, int width) {
+    public Button (String activeImage, String inactiveImage, int height, int width) {
        this.activeImage = new Texture(activeImage);
        this.inactiveImage = new Texture(inactiveImage);
        this.height = height;

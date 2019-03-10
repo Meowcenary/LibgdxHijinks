@@ -12,15 +12,19 @@ public class MainMenuScreen implements Screen {
     private static final float BUTTON_SPACING_Y = 80;
 
     HelicopterGame game;
+    MainGameScreen gameScreen;
 
     private Button[] buttons;
+    Button playButton;
+    Button exitButton;
 
     public MainMenuScreen (HelicopterGame game) {
         this.game = game;
-        Button playButton = new Button("play_button_active.png", "play_button_inactive.png", 70, 200);
-        Button exitButton = new Button("exit_button_active.png", "exit_button_inactive.png", 70,200);
+        this.gameScreen = new MainGameScreen(game);
+        this.playButton = new Button("play_button_active.png", "play_button_inactive.png", 70, 200);
+        this.exitButton = new Button("exit_button_active.png", "exit_button_inactive.png", 70,200);
 
-        this.buttons = new Button[]{ exitButton, playButton };
+        this.buttons = new Button[]{ this.exitButton, this.playButton };
     }
 
     @Override
@@ -63,7 +67,7 @@ public class MainMenuScreen implements Screen {
 
     }
 
-    private void drawButtons() {
+    private void drawButtons () {
 		float iterations = 1;
         for (Button button : buttons) {
             float xDrawStart = xButtonSpacing(button);
@@ -71,6 +75,9 @@ public class MainMenuScreen implements Screen {
 
             if (betweenButtonWidth(button) && betweenButtonHeight(button, yDrawStart)) {
                 game.batch.draw(button.activeImage, xDrawStart, yDrawStart);
+                if (Gdx.input.isTouched()) {
+                    buttonListener(button);
+                }
             }
             else {
                 game.batch.draw(button.inactiveImage, xDrawStart, yDrawStart);
@@ -79,12 +86,15 @@ public class MainMenuScreen implements Screen {
         }
     }
 
+    // You should probably move button detection logic into the button itself
+    // Idk how you can set a handler for clicking a button outside of the screen though...
+
     // to draw in center: HelicopterGame.WIDTH / 2 - BUTTON_WIDTH / 2
-    private float xButtonSpacing(Button button) {
+    private float xButtonSpacing (Button button) {
         return HelicopterGame.WIDTH / 2 - button.width / 2;
     }
 
-    private boolean betweenButtonWidth(Button button) {
+    private boolean betweenButtonWidth (Button button) {
         if ((xButtonSpacing(button) < Gdx.input.getX()) && (Gdx.input.getX() < HelicopterGame.WIDTH - xButtonSpacing(button))) {
             return true;
         }
@@ -93,12 +103,21 @@ public class MainMenuScreen implements Screen {
         }
     }
 
-    private boolean betweenButtonHeight(Button button, float yDrawStart) {
+    private boolean betweenButtonHeight (Button button, float yDrawStart) {
         if ((HelicopterGame.HEIGHT - Gdx.input.getY() < yDrawStart + button.height) && (HelicopterGame.HEIGHT - Gdx.input.getY() > yDrawStart)) {
             return true;
         }
         else {
            return false;
+        }
+    }
+
+    private void buttonListener (Button button) {
+        if(button == this.playButton) {
+            game.setScreen(this.gameScreen);
+        }
+        else if(button == this.exitButton) {
+            Gdx.app.exit();
         }
     }
 }

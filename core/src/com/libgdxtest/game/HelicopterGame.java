@@ -3,7 +3,6 @@ package com.libgdxtest.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import com.libgdxtest.screens.MainGameScreen;
 import com.libgdxtest.screens.MainMenuScreen;
 
 public class HelicopterGame extends Game {
