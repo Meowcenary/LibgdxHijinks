@@ -7,8 +7,8 @@ import com.libgdxtest.screens.MainMenuScreen;
 
 public class HelicopterGame extends Game {
 
-	public static final int WIDTH = 480;
-	public static final int HEIGHT = 720;
+	public static final int WIDTH = 920;
+	public static final int HEIGHT = 820;
 
 	public SpriteBatch batch;
 
